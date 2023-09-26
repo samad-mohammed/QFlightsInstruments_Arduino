@@ -9,35 +9,43 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>929</width>
-    <height>573</height>
+    <width>1366</width>
+    <height>768</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: lightgray;</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="qfi_EADI" name="graphicsView">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>10</y>
-      <width>481</width>
-      <height>431</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>150</y>
-      <width>251</width>
-      <height>151</height>
+      <x>809</x>
+      <y>630</y>
+      <width>381</width>
+      <height>141</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#F8F8FF;</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -46,6 +54,9 @@
      <enum>QFrame::Raised</enum>
     </property>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="4" column="1">
+      <widget class="QDoubleSpinBox" name="doubleSpinBoxHeadingSpeed"/>
+     </item>
      <item row="1" column="1">
       <widget class="QDoubleSpinBox" name="doubleSpinBoxRoll">
        <property name="minimum">
@@ -59,32 +70,9 @@
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Heading : </string>
+        <string>Heading Dir(Yaw): </string>
        </property>
       </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBoxheading">
-       <property name="minimum">
-        <double>-90.000000000000000</double>
-       </property>
-       <property name="maximum">
-        <double>90.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Altitude : </string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBoxAltitude"/>
-     </item>
-     <item row="4" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBoxHeadingSpeed"/>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="label_5">
@@ -100,6 +88,13 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Pitch : </string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="1">
       <widget class="QDoubleSpinBox" name="doubleSpinBoxPitch">
        <property name="minimum">
@@ -110,22 +105,194 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Pitch : </string>
+     <item row="2" column="1">
+      <widget class="QDoubleSpinBox" name="doubleSpinBoxHeading">
+       <property name="minimum">
+        <double>-180.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>180.000000000000000</double>
        </property>
       </widget>
      </item>
     </layout>
    </widget>
+   <widget class="QQuickWidget" name="quickWidget">
+    <property name="geometry">
+     <rect>
+      <x>3</x>
+      <y>3</y>
+      <width>1677</width>
+      <height>800</height>
+     </rect>
+    </property>
+    <property name="resizeMode">
+     <enum>QQuickWidget::SizeRootObjectToView</enum>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame_2">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>630</y>
+      <width>321</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#F8F8FF;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string>Turn Rate : </string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QDoubleSpinBox" name="doubleSpinBoxTR">
+       <property name="minimum">
+        <double>-180.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>180.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Altitude : </string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDoubleSpinBox" name="doubleSpinBoxAltitude"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QFrame" name="background_color">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>430</y>
+      <width>501</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(75, 75, 75);
+border-top-left-radius:10px; border-top-right-radius: 10px;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>190</y>
+       <width>471</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
+      <item>
+       <widget class="qfi_TC" name="graphicsView_TurnCoord">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="qfi_HI" name="graphicsView_HeadingIndicator">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="qfi_VSI" name="graphicsView_VerticalSpeed">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="qfi_ALT" name="graphicsView_AltitudeIndicator">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>30</y>
+       <width>152</width>
+       <height>149</height>
+      </rect>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+    </widget>
+    <widget class="qfi_EADI" name="graphicsView_AttitudeIndicator">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>167</x>
+       <y>20</y>
+       <width>170</width>
+       <height>165</height>
+      </rect>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+    </widget>
+    <widget class="qfi_ASI" name="graphicsView_AirSpeed">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>30</y>
+       <width>152</width>
+       <height>149</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <zorder>frame_2</zorder>
+   <zorder>frame</zorder>
+   <zorder>quickWidget</zorder>
+   <zorder>background_color</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>929</width>
+     <width>1366</width>
      <height>21</height>
     </rect>
    </property>
@@ -134,9 +301,39 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>QQuickWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">QtQuickWidgets/QQuickWidget</header>
+  </customwidget>
+  <customwidget>
    <class>qfi_EADI</class>
    <extends>QGraphicsView</extends>
    <header>qfi/qfi_EADI.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qfi_TC</class>
+   <extends>QGraphicsView</extends>
+   <header>qfi/qfi_TC.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qfi_ALT</class>
+   <extends>QGraphicsView</extends>
+   <header>qfi/qfi_ALT.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qfi_VSI</class>
+   <extends>QGraphicsView</extends>
+   <header>qfi/qfi_VSI.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qfi_HI</class>
+   <extends>QGraphicsView</extends>
+   <header>qfi/qfi_HI.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qfi_ASI</class>
+   <extends>QGraphicsView</extends>
+   <header>qfi/qfi_ASI.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

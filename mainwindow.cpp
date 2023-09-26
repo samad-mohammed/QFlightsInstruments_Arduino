@@ -1,3 +1,4 @@
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QSerialPort>
@@ -11,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
+    ui->quickWidget->setSource(QUrl(QStringLiteral("qrc:/QmlMap.qml")));
+    ui->quickWidget->show();
 
 
     serialPort = new QSerialPort(this);
@@ -52,7 +55,7 @@ MainWindow::~MainWindow()
 void MainWindow :: timerEvent(QTimerEvent *event)
 {
     QMainWindow :: timerEvent(event);
-    ui->graphicsView->redraw();
+    ui->graphicsView_AttitudeIndicator->redraw();
 }
 
 void MainWindow::on_doubleSpinBoxPitch_valueChanged(double arg1)
@@ -60,8 +63,8 @@ void MainWindow::on_doubleSpinBoxPitch_valueChanged(double arg1)
 //    ui->graphicsEADI->setPitch(arg1);
 //    ui->graphicsEADI->redraw();
 //    ui->doubleSpinBoxPitch->setValue(25);
-    ui->graphicsView->setPitch(arg1);
-    ui->graphicsView->redraw();
+    ui->graphicsView_AttitudeIndicator->setPitch(arg1);
+    ui->graphicsView_AttitudeIndicator->redraw();
     ui->statusbar->showMessage("Pitch value is changing");
 
 }
@@ -69,35 +72,47 @@ void MainWindow::on_doubleSpinBoxPitch_valueChanged(double arg1)
 
 void MainWindow::on_doubleSpinBoxRoll_valueChanged(double arg1)
 {
-    ui->graphicsView->setRoll(arg1);
-    ui->graphicsView->redraw();
+    ui->graphicsView_AttitudeIndicator->setRoll(arg1);
+    ui->graphicsView_AttitudeIndicator->redraw();
     ui->statusbar->showMessage("Pitch value is changing");
 }
 
 
 void MainWindow::on_doubleSpinBoxAltitude_valueChanged(double arg1)
 {
-    ui->graphicsView->setAltitude(arg1);
-    ui->graphicsView->redraw();
+    ui->graphicsView_AttitudeIndicator->setAltitude(arg1);
+    ui->graphicsView_AttitudeIndicator->redraw();
     ui->statusbar->showMessage("Altitude is changing");
 }
 
 
-void MainWindow::on_doubleSpinBoxheading_valueChanged(double arg1)
+void MainWindow::on_doubleSpinBoxHeading_valueChanged(double arg1)
 {
-    ui->graphicsView->setHeading(arg1);
+    ui->graphicsView_AttitudeIndicator->setHeading(arg1);
 //    ui->graphicsView->setAirspeed(arg1);
-    ui->graphicsView->redraw();
+    ui->graphicsView_AttitudeIndicator->redraw();
     ui->statusbar->showMessage("Plane is moving forward");
 }
 
 
 void MainWindow::on_doubleSpinBoxHeadingSpeed_valueChanged(double arg1)
 {
-    ui->graphicsView->setAirspeed(arg1);
-    ui->graphicsView->redraw();
+    ui->graphicsView_AttitudeIndicator->setAirspeed(arg1);
+//    ui->graphicsView->set
+    ui->graphicsView_AttitudeIndicator->redraw();
     ui->statusbar->showMessage("Plane speed is changing");
 }
+
+
+
+void MainWindow::on_doubleSpinBoxTR_valueChanged(double arg1)
+{
+    ui->graphicsView_TurnCoord->setTurnRate(arg1);
+    ui->graphicsView_TurnCoord->redraw();
+//    ui->graphicsView_TC
+
+}
+
 
 void MainWindow::checkForData()
 {
@@ -137,28 +152,50 @@ void MainWindow::readData()
         accY = values[4].toDouble();
         accZ = values[5].toDouble();
 
-//                        qDebug() << "GyroX:" << gyroX << "GyroY:" << gyroY << "GyroZ:" << gyroZ
-//                                 << "AccX:" << accX << "AccY:" << accY << "AccZ:" << accZ;
+        accelerationX = (signed int)(((signed int)accX) * 3.9);
+        accelerationY = (signed int)(((signed int)accY) * 3.9);
+        accelerationZ = (signed int)(((signed int)accZ) * 3.9);
 
-//                        ui->graphicsView->setHeading(accX);
-                        // Update UI elements here with the received data
+//        Note: M_PI = 3.14159265358979323846 it is constant defined in math.h
+        pitch = 180 * atan (accelerationX/sqrt(accelerationY*accelerationY + accelerationZ*accelerationZ))/M_PI;
 
-                        ui->doubleSpinBoxPitch->setValue(gyroX);
-                        ui->doubleSpinBoxRoll->setValue(gyroY);
-                        ui->doubleSpinBoxheading->setValue(gyroZ);
+        roll = atan2(accelerationY, accelerationZ) * 180.0 / M_PI;
+
+        yaw = atan2(accelerationZ, accelerationX)*180.0 / M_PI - 90.0;
+
+        double gyro_sensitivity_x = 250;
+        double gyro_bias_x = 0.5;
+/*       yaw = (gyroX+gyroY+gyroZ)*0.2;
+        currYaw = prevYaw + yaw;
+        turnRate = yaw/0.2;
+        prevYaw = currYaw;
+*/
+
+//        turnRate = (gyroZ/gyro_sensitivity_x) - gyro_bias_x;
+        // Update UI elements here with the received data
+
+        ui->doubleSpinBoxPitch->setValue(pitch);
+        ui->doubleSpinBoxRoll->setValue(roll);
+        ui->doubleSpinBoxHeading->setValue(yaw);
+
+        ui->doubleSpinBoxTR->setValue(gyroX);
+        ui->doubleSpinBoxHeadingSpeed->setValue(accelerationX);
+
+//            ui->doubleSpinBoxTR->setValue(turnRate);
 
 
-                        ui->doubleSpinBoxHeadingSpeed->setValue(accX);
-                        ui->doubleSpinBoxAltitude->setValue(accZ);
-//                        ui->doubleSpinBoxheading->setValue(gyroZ);
-                        // You can also update your graphics view if needed
-
-                        // ui->graphicsView->setPitch(gyroX);
-                        // ui->graphicsView->setRoll(gyroY);
-                        // ui->graphicsView->setAltitude(gyroZ);
-
-                        // ui->graphicsView->redraw();
-//                        ui->doubleSpinBoxHeadingSpeed->setValue(accX);
 
     }
 }
+
+/*
+void MainWindow::on_doubleSpinBox_Yaw_valueChanged(double arg1)
+{
+    ui->doubleSpinBoxheading->setValue(arg1);
+    ui->graphicsView->redraw();
+    ui->statusbar->showMessage("Yaw is changing");
+}
+
+*/
+
+

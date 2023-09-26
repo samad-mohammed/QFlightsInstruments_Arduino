@@ -1,6 +1,6 @@
 import QtQuick 2.0
-import QtLocation 5.11
-import QtPositioning 5.11
+import QtLocation
+import QtPositioning
 
 
 Rectangle{

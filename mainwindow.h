@@ -4,6 +4,8 @@
 #include <QSerialPort>
 #include <QMainWindow>
 #include <QTimer>
+#include<QGeoRoute>
+
 
 //#include <QtQuick>
 //#include <QtPositioning>
@@ -30,9 +32,12 @@ private slots:
 
     void on_doubleSpinBoxAltitude_valueChanged(double arg1);
 
-    void on_doubleSpinBoxheading_valueChanged(double arg1);
+    void on_doubleSpinBoxHeading_valueChanged(double arg1);
 
     void on_doubleSpinBoxHeadingSpeed_valueChanged(double arg1);
+
+
+    void on_doubleSpinBoxTR_valueChanged(double arg1);
 
 private:
     Ui::MainWindow *ui;
@@ -46,6 +51,16 @@ private:
     double accX;
     double accY;
     double accZ;
-
+    
+    signed int accelerationX;
+    signed int accelerationY;
+    signed int accelerationZ;
+    double pitch;
+    double roll;
+    double yaw;
+    double turnRate;
+    double prevYaw=0.0;
+    double heading;
+    double currYaw;
 };
 #endif // MAINWINDOW_H
